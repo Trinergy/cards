@@ -1,29 +1,30 @@
 package cards
 
-import (
-	"fmt"
-)
-
-const CardTranslation := map[int]string {
-	1: "ace",
-	2: "two",
-	3: "three",
-	4: "four",
-	5: "five",
-	6: "six",
-	7: "seven",
-	8: "eight",
-	9: "nine",
+// CardTranslation is a table to map number to string
+var CardTranslation = map[int]string{
+	1:  "ace",
+	2:  "two",
+	3:  "three",
+	4:  "four",
+	5:  "five",
+	6:  "six",
+	7:  "seven",
+	8:  "eight",
+	9:  "nine",
 	10: "ten",
 	11: "jack",
 	12: "queen",
 	13: "king",
 }
 
-const Deck := []struct {
+// Card for playing
+type Card struct {
 	value int
 	suite string
-}{
+}
+
+// Deck is a standard deck of cards
+var Deck = []Card{
 	{1, "spades"},
 	{2, "spades"},
 	{3, "spades"},
@@ -74,7 +75,7 @@ const Deck := []struct {
 	{12, "diamonds"},
 }
 
-func NewDeck() struct {
-	newDeck := Deck
-	return newDeck
+// NewDeck returns a brand new deck of cards
+func NewDeck() []Card {
+	return Deck
 }
