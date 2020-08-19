@@ -2,6 +2,8 @@ package cards
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 // CardTranslation is a table to map number to string
@@ -84,8 +86,12 @@ var Deck = []Card{
 }
 
 // NewDeck returns a brand new deck of cards
+// reference: https://github.com/go101/go101/wiki/How-to-perfectly-clone-a-slice%3F
 func NewDeck() []Card {
-	return Deck
+	newDeck := make([]Card, len(Deck))
+	copy(newDeck, Deck)
+
+	return newDeck
 }
 
 // PrettyPrintDeck logs all cards in the deck
@@ -93,4 +99,11 @@ func PrettyPrintDeck(deck []Card) {
 	for _, card := range deck {
 		fmt.Printf("%v of %v\n", CardTranslation[card.value], card.suite)
 	}
+}
+
+// Shuffle will shuffle the deck of cards
+// reference: https://programming.guide/go/shuffle-slice-array.html
+func Shuffle(deck []Card) {
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(deck), func(i, j int) { deck[i], deck[j] = deck[j], deck[i] })
 }
