@@ -1,5 +1,7 @@
 package cards
 
+import "fmt"
+
 // CardTranslation is a table to map number to string
 var CardTranslation = map[int]string{
 	1:  "Ace",
@@ -21,4 +23,8 @@ var CardTranslation = map[int]string{
 type Card struct {
 	value int
 	suite string
+}
+
+func (c Card) print() {
+	fmt.Printf("%v of %v\n", CardTranslation[c.value], c.suite)
 }

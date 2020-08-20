@@ -7,18 +7,18 @@ import (
 )
 
 func main() {
-	cards.NewDeck()
-	cards.PrintDeck()
-	cards.Shuffle()
+	d := cards.NewDeck()
+	d.Print()
+	d.Shuffle()
 	fmt.Println("===Shuffled Deck===")
-	cards.PrintDeck()
+	d.Print()
 	fmt.Println("===BRAND NEW------------------------------------===")
 
 	cards.NewDeck()
-	cards.PrintDeck()
+	d.Print()
 	// fmt.Println("===Dealt Hand===")
 	// hand := cards.Deal(3)
 	// cards.PrintCards(hand)
 	// fmt.Println("===Dealt Deck===")
-	// cards.PrintDeck()
+	// d.Print()
 }
