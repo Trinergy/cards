@@ -1,7 +1,6 @@
 package cards
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
 )
@@ -11,7 +10,7 @@ func TestShuffle(t *testing.T) {
 		d := NewDeck()
 		d.Shuffle()
 
-		if reflect.DeepEqual(startDeck.cards, d.cards) {
+		if reflect.DeepEqual(startDeck.Cards, d.Cards) {
 			t.Errorf("Cards are not shuffled")
 		}
 	})
@@ -22,15 +21,13 @@ func TestDeal(t *testing.T) {
 		number := 5
 		d := NewDeck()
 
-		initialDeckLength := len(d.cards)
-		fmt.Println(initialDeckLength)
+		initialDeckLength := len(d.Cards)
 
 		hand := d.Deal(number)
-		fmt.Println(len(d.cards))
-		if len(d.cards) != (initialDeckLength - number) {
+		if len(d.Cards) != (initialDeckLength - number) {
 			t.Errorf("Dealt cards were not removed from deck")
 		}
-		if len(hand.cards) != number {
+		if len(hand.Cards) != number {
 			t.Errorf("Cards were not dealt")
 		}
 	})

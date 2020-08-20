@@ -21,10 +21,10 @@ var CardTranslation = map[int]string{
 
 // Card for playing
 type Card struct {
-	value int
-	suite string
+	Value int
+	Suit  string
 }
 
-func (c Card) print() {
-	fmt.Printf("%v of %v\n", CardTranslation[c.value], c.suite)
+func (c *Card) print() {
+	fmt.Printf("%v of %v\n", CardTranslation[c.Value], c.Suit)
 }

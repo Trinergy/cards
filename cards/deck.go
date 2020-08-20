@@ -1,13 +1,15 @@
 package cards
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"math/rand"
 	"time"
 )
 
 var startDeck = Deck{
-	cards: []Card{
+	Cards: []Card{
 		{1, "Spades"},
 		{2, "Spades"},
 		{3, "Spades"},
@@ -65,20 +67,20 @@ var startDeck = Deck{
 
 // Deck of cards
 type Deck struct {
-	cards []Card
+	Cards []Card
 }
 
 // NewDeck resets the CurrentDeck to a new copy of the starting deck
 func NewDeck() Deck {
-	newDeck := make([]Card, len(startDeck.cards))
-	copy(newDeck, startDeck.cards)
+	newDeck := make([]Card, len(startDeck.Cards))
+	copy(newDeck, startDeck.Cards)
 
-	return Deck{cards: newDeck}
+	return Deck{Cards: newDeck}
 }
 
 // Print logs all cards in deck
-func (d Deck) Print() {
-	for _, card := range d.cards {
+func (d *Deck) Print() {
+	for _, card := range d.Cards {
 		card.print()
 	}
 }
@@ -87,8 +89,8 @@ func (d Deck) Print() {
 // reference: https://programming.guide/go/shuffle-slice-array.html
 func (d *Deck) Shuffle() {
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(d.cards), func(i, j int) {
-		d.cards[i], d.cards[j] = d.cards[j], d.cards[i]
+	rand.Shuffle(len(d.Cards), func(i, j int) {
+		d.Cards[i], d.Cards[j] = d.Cards[j], d.Cards[i]
 	})
 }
 
@@ -97,7 +99,24 @@ func (d *Deck) Deal(number int) Deck {
 	if number <= 0 || number > 52 {
 		panic(fmt.Sprintf("Can not deal %v card(s)", number))
 	}
-	hand := Deck{cards: d.cards[:number]}
-	d.cards = d.cards[number:]
+	hand := Deck{Cards: d.Cards[:number]}
+	d.Cards = d.Cards[number:]
 	return hand
+}
+
+// SaveToFile converts the deck's cards to a byte slice and writes it to a json file
+func (d *Deck) SaveToFile(filename string) {
+	file := d.toJSON()
+	err := ioutil.WriteFile(filename+".json", file, 0644)
+	if err != nil {
+		fmt.Println("Could not write to file")
+	}
+}
+
+func (d *Deck) toJSON() []byte {
+	file, err := json.MarshalIndent(d.Cards, "", " ")
+	if err != nil {
+		fmt.Println("Could not covert to JSON")
+	}
+	return file
 }
