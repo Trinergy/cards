@@ -96,12 +96,12 @@ func (d *Deck) Shuffle() {
 }
 
 // Deal gives you # cards from the top of the deck
-func (d *Deck) Deal(number int) Deck {
-	if number <= 0 || number > 52 {
-		panic(fmt.Sprintf("Can not deal %v card(s)", number))
+func (d *Deck) Deal(handSize int) Deck {
+	if handSize <= 0 || handSize > 52 {
+		panic(fmt.Sprintf("Can not deal %v card(s)", handSize))
 	}
-	hand := Deck{Cards: d.Cards[:number]}
-	d.Cards = d.Cards[number:]
+	hand := Deck{Cards: d.Cards[:handSize]}
+	d.Cards = d.Cards[handSize:]
 	return hand
 }
 
