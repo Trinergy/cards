@@ -107,16 +107,33 @@ func (d *Deck) Deal(number int) Deck {
 // SaveToFile converts the deck's cards to a byte slice and writes it to a json file
 func (d *Deck) SaveToFile(filename string) {
 	file := d.toJSON()
-	err := ioutil.WriteFile(filename+".json", file, 0644)
+	err := ioutil.WriteFile(filename, file, 0644)
 	if err != nil {
-		fmt.Println("Could not write to file")
+		panic(fmt.Sprintln("Could not write to file"))
 	}
 }
 
 func (d *Deck) toJSON() []byte {
-	file, err := json.MarshalIndent(d.Cards, "", " ")
+	file, err := json.MarshalIndent(d, "", " ")
 	if err != nil {
-		fmt.Println("Could not covert to JSON")
+		panic(fmt.Sprintln("Could not covert to JSON"))
 	}
 	return file
+}
+
+// DeckFromJSONFile reads a json file and converts it into a deck
+func DeckFromJSONFile(filename string) Deck {
+	jsonBlob, errRead := ioutil.ReadFile(filename)
+
+	if errRead != nil {
+		panic(fmt.Sprintln("Could not read JSON file"))
+	}
+
+	var deck Deck
+	err := json.Unmarshal(jsonBlob, &deck)
+
+	if err != nil {
+		panic(fmt.Sprintln("Could not read JSON file"))
+	}
+	return deck
 }
