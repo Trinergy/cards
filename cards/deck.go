@@ -70,7 +70,8 @@ type Deck struct {
 	Cards []Card
 }
 
-// NewDeck resets the CurrentDeck to a new copy of the starting deck
+// NewDeck resets the deck to a new copy of the starting deck
+// reference: https://github.com/go101/go101/wiki/How-to-perfectly-clone-a-slice%3F
 func NewDeck() Deck {
 	newDeck := make([]Card, len(startDeck.Cards))
 	copy(newDeck, startDeck.Cards)
