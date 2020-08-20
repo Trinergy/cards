@@ -9,7 +9,7 @@ import (
 func TestShuffle(t *testing.T) {
 	t.Run("Cards are shuffled", func(t *testing.T) {
 		d := NewDeck()
-		d.shuffle()
+		d.Shuffle()
 
 		if reflect.DeepEqual(startDeck.cards, d.cards) {
 			t.Errorf("Cards are not shuffled")
@@ -25,7 +25,7 @@ func TestDeal(t *testing.T) {
 		initialDeckLength := len(d.cards)
 		fmt.Println(initialDeckLength)
 
-		hand := d.deal(number)
+		hand := d.Deal(number)
 		fmt.Println(len(d.cards))
 		if len(d.cards) != (initialDeckLength - number) {
 			t.Errorf("Dealt cards were not removed from deck")

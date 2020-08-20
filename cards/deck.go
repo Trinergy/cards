@@ -76,7 +76,8 @@ func NewDeck() Deck {
 	return Deck{cards: newDeck}
 }
 
-func (d Deck) print() {
+// Print logs all cards in deck
+func (d Deck) Print() {
 	for _, card := range d.cards {
 		card.print()
 	}
@@ -84,7 +85,7 @@ func (d Deck) print() {
 
 // Shuffle will shuffle the deck of cards
 // reference: https://programming.guide/go/shuffle-slice-array.html
-func (d *Deck) shuffle() {
+func (d *Deck) Shuffle() {
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(d.cards), func(i, j int) {
 		d.cards[i], d.cards[j] = d.cards[j], d.cards[i]
@@ -92,7 +93,7 @@ func (d *Deck) shuffle() {
 }
 
 // Deal gives you # cards from the top of the deck
-func (d *Deck) deal(number int) Deck {
+func (d *Deck) Deal(number int) Deck {
 	if number <= 0 || number > 52 {
 		panic(fmt.Sprintf("Can not deal %v card(s)", number))
 	}
