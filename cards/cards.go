@@ -6,7 +6,6 @@ import (
 	"time"
 )
 
-// Deck is a standard deck of cards
 var startDeck = []Card{
 	{1, "Spades"},
 	{2, "Spades"},
@@ -62,11 +61,17 @@ var startDeck = []Card{
 	{13, "Diamonds"},
 }
 
-var currentDeck []Card
+// CurrentDeck being used
+var CurrentDeck []Card
 
-// NewDeck returns a brand new deck of cards
-func NewDeck() {
-	currentDeck = startDeck
+// NewDeck resets the CurrentDeck to a new copy of the starting deck
+func NewDeck() []Card {
+	newDeck := make([]Card, len(startDeck))
+	copy(newDeck, startDeck)
+
+	CurrentDeck = newDeck
+
+	return CurrentDeck
 }
 
 //PrintCards logs all cards in deck parameter
@@ -78,14 +83,14 @@ func PrintCards(deck []Card) {
 
 // PrintDeck logs all cards in the current deck
 func PrintDeck() {
-	PrintCards(currentDeck)
+	PrintCards(CurrentDeck)
 }
 
 // Shuffle will shuffle the deck of cards
 // reference: https://programming.guide/go/shuffle-slice-array.html
 func Shuffle() {
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(currentDeck), func(i, j int) { currentDeck[i], currentDeck[j] = currentDeck[j], currentDeck[i] })
+	rand.Shuffle(len(CurrentDeck), func(i, j int) { CurrentDeck[i], CurrentDeck[j] = CurrentDeck[j], CurrentDeck[i] })
 }
 
 // Deal gives you # cards from the top of the deck
@@ -93,7 +98,7 @@ func Deal(number int) []Card {
 	if number <= 0 || number > 52 {
 		panic(fmt.Sprintf("Can not deal %v card(s)", number))
 	}
-	hand := currentDeck[:number]
-	currentDeck = currentDeck[number:]
+	hand := CurrentDeck[:number]
+	CurrentDeck = CurrentDeck[number:]
 	return hand
 }
