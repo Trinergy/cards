@@ -1,6 +1,7 @@
 package cards
 
 import (
+	"os"
 	"reflect"
 	"testing"
 )
@@ -34,5 +35,19 @@ func TestDeal(t *testing.T) {
 	}
 	if len(hand.Cards) != handSize {
 		t.Errorf("Cards were not dealt")
+	}
+}
+
+func TestSaveToFileAndDeckFromJSONFile(t *testing.T) {
+	deckSize := len(startDeck.Cards)
+	os.Remove("testing.json")
+	defer os.Remove("testing.json")
+
+	d := NewDeck()
+	d.SaveToJSONFile("testing.json")
+	newDeck := DeckFromJSONFile("testing.json")
+
+	if len(newDeck.Cards) != deckSize {
+		t.Errorf("Save or Read from JSON file was unsuccessful")
 	}
 }

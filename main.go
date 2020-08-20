@@ -6,8 +6,7 @@ import (
 
 func main() {
 	d := cards.NewDeck()
-	d.Shuffle()
-	d.SaveToFile("test.json")
+	d.SaveToJSONFile("test.json")
 	readDeck := cards.DeckFromJSONFile("test.json")
 	readDeck.Print()
 }

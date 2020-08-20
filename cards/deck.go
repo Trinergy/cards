@@ -105,8 +105,8 @@ func (d *Deck) Deal(handSize int) Deck {
 	return hand
 }
 
-// SaveToFile converts the deck's cards to a byte slice and writes it to a json file
-func (d *Deck) SaveToFile(filename string) {
+// SaveToJSONFile converts the deck's cards to a byte slice and writes it to a json file
+func (d *Deck) SaveToJSONFile(filename string) {
 	file := d.toJSON()
 	err := ioutil.WriteFile(filename, file, 0644)
 	if err != nil {
