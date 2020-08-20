@@ -6,29 +6,6 @@ import (
 	"time"
 )
 
-// CardTranslation is a table to map number to string
-var CardTranslation = map[int]string{
-	1:  "Ace",
-	2:  "Two",
-	3:  "Three",
-	4:  "Four",
-	5:  "Five",
-	6:  "Six",
-	7:  "Seven",
-	8:  "Eight",
-	9:  "Nine",
-	10: "Ten",
-	11: "Jack",
-	12: "Queen",
-	13: "King",
-}
-
-// Card for playing
-type Card struct {
-	value int
-	suite string
-}
-
 // Deck is a standard deck of cards
 var startDeck = []Card{
 	{1, "Spades"},
@@ -92,16 +69,16 @@ func NewDeck() {
 	currentDeck = startDeck
 }
 
-// PrintDeck logs all cards in the current deck
-func PrintDeck() {
-	PrintCards(currentDeck)
-}
-
 //PrintCards logs all cards in deck parameter
 func PrintCards(deck []Card) {
 	for _, card := range deck {
 		fmt.Printf("%v of %v\n", CardTranslation[card.value], card.suite)
 	}
+}
+
+// PrintDeck logs all cards in the current deck
+func PrintDeck() {
+	PrintCards(currentDeck)
 }
 
 // Shuffle will shuffle the deck of cards
