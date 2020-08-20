@@ -8,11 +8,16 @@ import (
 
 func main() {
 	deck := cards.NewDeck()
-	cards.PrettyPrintDeck(deck)
+	cards.PrettyPrintCards(deck)
 	cards.Shuffle(deck)
 	fmt.Println("===Shuffled Deck===")
-	cards.PrettyPrintDeck(deck)
+	cards.PrettyPrintCards(deck)
 	fmt.Println("===Grabbing Deck 2===")
 	deck2 := cards.NewDeck()
-	cards.PrettyPrintDeck(deck2)
+	cards.PrettyPrintCards(deck2)
+	fmt.Println("===Dealt Hand===")
+	hand := cards.Deal(3, deck2)
+	cards.PrettyPrintCards(hand)
+	fmt.Println("===Dealt Deck===")
+	cards.PrettyPrintCards(deck2)
 }

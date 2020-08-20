@@ -94,8 +94,8 @@ func NewDeck() []Card {
 	return newDeck
 }
 
-// PrettyPrintDeck logs all cards in the deck
-func PrettyPrintDeck(deck []Card) {
+// PrettyPrintCards logs all cards in the deck
+func PrettyPrintCards(deck []Card) {
 	for _, card := range deck {
 		fmt.Printf("%v of %v\n", CardTranslation[card.value], card.suite)
 	}
@@ -106,4 +106,14 @@ func PrettyPrintDeck(deck []Card) {
 func Shuffle(deck []Card) {
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(deck), func(i, j int) { deck[i], deck[j] = deck[j], deck[i] })
+}
+
+// Deal gives you # cards from the top of the deck
+func Deal(number int, deck []Card) []Card {
+	if number <= 0 || number > 52 {
+		panic(fmt.Sprintf("Can not deal %v card(s)", number))
+	}
+	Shuffle(deck)
+	hand := deck[:number]
+	return hand
 }
