@@ -30,7 +30,7 @@ type Card struct {
 }
 
 // Deck is a standard deck of cards
-var Deck = []Card{
+var startDeck = []Card{
 	{1, "Spades"},
 	{2, "Spades"},
 	{3, "Spades"},
@@ -85,17 +85,20 @@ var Deck = []Card{
 	{13, "Diamonds"},
 }
 
-// NewDeck returns a brand new deck of cards
-// reference: https://github.com/go101/go101/wiki/How-to-perfectly-clone-a-slice%3F
-func NewDeck() []Card {
-	newDeck := make([]Card, len(Deck))
-	copy(newDeck, Deck)
+var currentDeck []Card
 
-	return newDeck
+// NewDeck returns a brand new deck of cards
+func NewDeck() {
+	currentDeck = startDeck
 }
 
-// PrettyPrintCards logs all cards in the deck
-func PrettyPrintCards(deck []Card) {
+// PrintDeck logs all cards in the current deck
+func PrintDeck() {
+	PrintCards(currentDeck)
+}
+
+//PrintCards logs all cards in deck parameter
+func PrintCards(deck []Card) {
 	for _, card := range deck {
 		fmt.Printf("%v of %v\n", CardTranslation[card.value], card.suite)
 	}
@@ -103,17 +106,17 @@ func PrettyPrintCards(deck []Card) {
 
 // Shuffle will shuffle the deck of cards
 // reference: https://programming.guide/go/shuffle-slice-array.html
-func Shuffle(deck []Card) {
+func Shuffle() {
 	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(deck), func(i, j int) { deck[i], deck[j] = deck[j], deck[i] })
+	rand.Shuffle(len(currentDeck), func(i, j int) { currentDeck[i], currentDeck[j] = currentDeck[j], currentDeck[i] })
 }
 
 // Deal gives you # cards from the top of the deck
-func Deal(number int, deck []Card) []Card {
+func Deal(number int) []Card {
 	if number <= 0 || number > 52 {
 		panic(fmt.Sprintf("Can not deal %v card(s)", number))
 	}
-	Shuffle(deck)
-	hand := deck[:number]
+	hand := currentDeck[:number]
+	currentDeck = currentDeck[number:]
 	return hand
 }
